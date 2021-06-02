@@ -1,0 +1,56 @@
+
+
+
+Creation d'un fichier regroupant les "CLUES" :
+grep CLUE crimescene > clues
+
+
+Dans les clues, un temoin (une femme) s'appelle Annabel.
+Creation d'un fichier regroupant les "Annabel" :
+grep Annabel people > clientes
+
+
+Dans les clues, le portefeuille du meurtrier contient 4 cartes d'abonnement (nom illisible).
+Creation d'un fichier comparent les clients de 2 des 4 etablissements liés aux abonnements :
+grep -wFf AAA Delta_SkyMiles > file1
+
+Creation d'un autre fichier comparant les 2 autres etablissements :
+grep -wFf Museum_of_Bash_History Terminal_City_Library > file2
+
+Creation d'un dernier fichier (1ere liste de suspects) en comparant les 2 précédents fichiers :
+grep -wFf file1 file2 > suspectsList
+
+
+Creation d'un fichier faisant apparaitre également l'adresse et le genre des suspects
+grep -wFf suspectsList people > suspectsList_adress_gender
+
+
+Le fichier "clientes" contient 4 Annabel; 2 d'entre elles sont des femmes.
+Ayant leurs adresses, creation d'un fichier faisant apparaitre le temoignage de la 1ere :
+grep INTERVIEW Buckingham_Place >inter1
+
+Creation d'un fichier faisant apparaitre le temoignage de la 2eme :
+grep INTERVIEW Hart_Place > inter2
+
+
+La 1ere cliente n'est pas la bonne (elle est brune), on obtient une description du vehicule du meurtrier de la 2nde.
+Creation d'un fichier regroupant les vehicules correspondants au temoignage :
+grep -a1 -a2 -a3 -a4 -a5 L337 vehicles | grep Honda -a1 -a2 -a3 -a4 | grep Blue -a1 -a2 -a3 > vehiclesList
+
+
+A partir de ce fichier, creation d'un autre fichier regroupant uniquement la liste des noms des proprietaires de ces vehicules :
+grep Owner vehiclesList > suspectsList2
+
+
+Suppression du terme "Owner: " dans cette liste :
+sed -i 's/Owner: //' suspectsList2
+
+Comparaison des 2 listes de suspects en créant un ultime fichier :
+grep -wFf suspectsList suspectsList2 > murderer
+
+Seul 2 noms apparaissant et l'un des deux étant une femme, on en déduit facilement le meurtrier :
+Jeremy Bowers
+
+
+
+
